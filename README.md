@@ -1,4 +1,25 @@
+# CryptoGinko
+This program is a crypto asset tracking program. However this program can be addapted to be used for stock tracking just as well.
+this version is targed squarly at crypto currencies. 
+
+##program features:
+1. tracking of address/account and wallet balances. 
+2. calculation of avage cost basis
+3. calculation of capital gains
+4. portfolio balance and value tracking.
+5. csv import of transaction data from some wallets like exodus and electrum
+
+
+
+## Development notes
+This is the React version of the this program.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+This project was created with the command:
+
+`npx create-react-app cryptoginko-react`
+
+The program is written in React, JavaScript and node JS
 
 ## Available Scripts
 
