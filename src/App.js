@@ -18,7 +18,31 @@ import Tabs from  "./components/Tabs/Tabs";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    //TODO put some state here.
+    this.state = {
+      balance: 10001,
+      coinData: [
+        {
+          name: 'Bitcoin',
+          ticker: 'BTC',
+          price:0
+        },
+        {
+          name: 'bitcoin-cash',
+          ticker: 'BCH', 
+          price: 0
+        },
+        {
+          name: 'Ethereum',
+          ticker: 'ETH', 
+          price: 0
+        },
+        {
+          name: 'Dash',
+          ticker: 'DASH', 
+          price: 0
+        }
+      ]
+    }
   }
 
   render() {
@@ -30,7 +54,7 @@ export default class App extends React.Component {
         </header>
         <Tabs> 
           <div label="current prices">
-            <Coins />
+            <Coins coinData={this.state.coinData} />
           </div> 
           <div label="portfolio"> 
             <Tabs>

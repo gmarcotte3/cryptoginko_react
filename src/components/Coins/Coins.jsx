@@ -10,37 +10,11 @@ const Table = styled.table`
   }
 `;
 
-// temparary list of my default coins. TODO: this will be loaded from a database
-const baseCoins = [
-    {
-        name: 'Bitcoin',
-        ticker: 'BTC', 
-        price: 0
-    },
-    {
-        name: 'bitcoin-cash',
-        ticker: 'BCH', 
-        price: 0
-    },
-    {
-        name: 'Ethereum',
-        ticker: 'ETH', 
-        price: 0
-    },
-    {
-        name: 'Dash',
-        ticker: 'DASH', 
-        price: 0
-    }
 
-];
 
 export default class Coins extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            coins: baseCoins,
-        }
     }
     
 
@@ -58,7 +32,7 @@ export default class Coins extends Component {
                     </thead>
                     <tbody>
                         {
-                          this.state.coins.map( ({name, ticker, price }) =>
+                          this.props.coinData.map( ({name, ticker, price }) =>
                           <Coin key={ticker} 
                                 name={name} 
                                 ticker={ticker} 
