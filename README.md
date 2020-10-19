@@ -9,6 +9,7 @@ this version is targed squarly at crypto currencies.
 4. portfolio balance and value tracking.
 5. csv import of transaction data from some wallets like exodus and electrum
 
+This code is in the prototype stage. I am using it to improve blockchain programming, and web3 development
 
 
 ## Development notes
