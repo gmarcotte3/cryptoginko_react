@@ -1,10 +1,28 @@
 
  import React, { Component } from 'react'
- import './Coin.css';
+ //import './Coin.css';
  import PropTypes from 'prop-types';
+ import styled from 'styled-components'
 
  const coingeckoService = require('../../services/coingeko-service');
  
+
+ // styled TD
+const TD = styled.td`
+border: 1px solid #2c2b2b;
+width : 25vh;
+`;
+
+// Styled button
+const Button = styled.button`
+border: 3px solid blue;
+background-color: black;
+color:white;
+border-radius: 10px;
+font-size: 18px;
+text-align: center;
+width: 150px;
+`;
  /**
   * This class represents a crypto coin with attributes of name, ticker, and price
   * This class also has a member function that get the current price from the internet.
@@ -13,6 +31,8 @@
      constructor(props) {
          super(props);
          this.state = {
+             name: this.props.name,
+             ticker: this.props.ticker, 
              price: this.props.price
          }
 
@@ -25,12 +45,12 @@
      render() {
          return (
             <tr className="coin-row">
-                <td>{this.props.name}</td>
-                <td>{this.props.ticker}</td>
-                <td>${this.state.price}</td>
-                <td>
-                    <button onClick={this.handleClick}>Refresh</button>
-                </td>
+                <TD>{this.props.name}</TD>
+                <TD>{this.props.ticker}</TD>
+                <TD>${this.state.price}</TD>
+                <TD>
+                    <Button onClick={this.handleClick}>Refresh</Button>
+                </TD>
             </tr>
          )
      }
@@ -85,12 +105,10 @@
 
     let gekocoinid = coingeckoService.getTickerFromName(ticker);
     console.log( "gekoid=", gekocoinid);
-   
-    console.log("what is thisThing", thisThing);  
+     
     coingeckoService.getPriceQuote(gekocoinid, (response) => {
         console.log("maded it back from geko call",response);
         console.log(response.currency, response.usd);
-        console.log("what is thisThing", thisThing);  
         thisThing.setState( function (oldState) {
             return { 
                 price: response.usd

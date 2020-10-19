@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './Tabs.css';
 import Tab from '../Tab/Tab';
+import styled from 'styled-components'
+
+
+const OL = styled.ol`
+  border-bottom: 1px solid #ccc;
+  padding-left: 0;
+`;
+
+
 
 class Tabs extends Component {
   static propTypes = {
@@ -33,7 +43,7 @@ class Tabs extends Component {
 
     return (
       <div className="tabs">
-        <ol className="tab-list">
+        <OL className="tab-list">
           {children.map((child) => {
             const { label } = child.props;
 
@@ -46,7 +56,7 @@ class Tabs extends Component {
               />
             );
           })}
-        </ol>
+        </OL>
         <div className="tab-content">
           {children.map((child) => {
             if (child.props.label !== activeTab) return undefined;

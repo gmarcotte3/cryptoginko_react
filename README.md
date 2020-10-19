@@ -21,6 +21,16 @@ This project was created with the command:
 
 The program is written in React, JavaScript and node JS
 
+### dependancies
+$ npm --version
+6.14.8
+$ node --version
+v12.18.3
+$ npx --version
+6.14.8
+
+$ npm install --save styled-components
+
 ## Available Scripts
 
 In the project directory, you can run:
