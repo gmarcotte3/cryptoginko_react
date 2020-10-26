@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import logo from './tranquility200x.png';
 import styled from 'styled-components'
 
@@ -25,14 +25,11 @@ const H1 = styled.h1`
     font-size: 4rem;
 `;
 
-
-export default class GinkoHeader extends Component {
-    render() {
-        return (
-        <Header>
-          <Img src={logo} alt="tranquility logo" />
-          <H1>Crypto Ginko Portfolio Management</H1>
-        </Header>
-        );
-    }
+export default function GinkoHeader(props) {
+    return (
+    <Header>
+        <Img src={logo} alt="tranquility logo" />
+        <H1>Crypto Ginko Portfolio Management</H1>
+    </Header>
+    );
 }

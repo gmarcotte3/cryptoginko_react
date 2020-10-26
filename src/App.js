@@ -78,7 +78,7 @@ export default class App extends React.Component {
     let coinsOut = [];
     for ( let j=0; j< coinsIn.length; j++) {  
       for ( let i = 0; i< this.state.myCoins.length; i++) {
-        if (this.state.myCoins[i].ticker == coinsIn[j].ticker ) {
+        if (this.state.myCoins[i].ticker === coinsIn[j].ticker ) {
           coinsOut.push(coinsIn[j]);
           break;
         }
