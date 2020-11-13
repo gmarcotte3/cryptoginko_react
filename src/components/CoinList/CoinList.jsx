@@ -1,20 +1,45 @@
 import React from 'react';
-//import './Coins.css';
 import Coin from '../Coin/Coin';
 import styled from 'styled-components'
+const CoinGecko = require('../services/CoinGecko');
 
 const Table = styled.table`
-    margin: 50px auto 50px auto;
-    display: inline-block;
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
 `;
 
+const Div = styled.div`
+    background: #2B2B2B 0% 0% no-repeat padding-box;
+    //background: transparent linear-gradient(180deg, #393939 0%, #7A7A7A 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    height: 44px
+`;
+
+// Styled button
+const Button = styled.button`
+    font-size: 11px;
+    width: 64px;
+    margin: 3px 5px 0;
+    vertical-align: middle;
+`;
+
+
 export default function CoinList(props) {
     // render as a table of coins
+
+    const handleRefresh = (event) => {
+        event.preventDefault();
+        CoinGecko.getCurrentPrices( handleUpdateMyCoins );
+    }
+
+    const handleUpdateMyCoins = (coinData ) => {
+        props.handleUpdateMyCoins(coinData);
+    }
+    
     
     return (
         <div label="current prices">
+            <Button className="btn btn-info" onClick={handleRefresh}>Refresh</Button>
             <Table >
                 <thead>
                     <tr>
