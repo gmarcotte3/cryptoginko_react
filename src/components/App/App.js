@@ -65,7 +65,7 @@ const myCoins0 = [
  */
 export default function App(props) {
 
-  const [myCoins, setMyCoins] = useState(myCoins0);
+  const [myCoins, setMyCoins] = useState([]);
   const [defaultFiatCurrency, setDefaultFiatCurrency] = useState('NZD');
 
   const [totalValue, setTotalValue] = React.useState(-1);
@@ -74,8 +74,8 @@ export default function App(props) {
 
   
   const handleUpdateMyCoins = (coinData1 ) => {
-    let coinData2 = filterOutCoinsNotInThePortfiolo(coinData1)
-    setMyCoins([...coinData2]);
+//    let coinData2 = filterOutCoinsNotInThePortfiolo(coinData1)
+    setMyCoins([...coinData1]);
   }
 
   const filterOutCoinsNotInThePortfiolo = (coinsIn) => {

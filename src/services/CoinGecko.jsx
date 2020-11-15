@@ -12,7 +12,10 @@
  * npm install coingecko-api
  * 
  */
+const axios = require('axios');
 const request = require('request');
+
+
 
 const EXTERNAL_URL = "https://api.coingecko.com/api/v3/coins";
 
@@ -53,6 +56,7 @@ module.exports.getTickerFromName = getTickerFromName;
  * gets a single price quote in number of fiat currencies 
  * The price quote will return with the price aas properties of diffeent fiat currentcies nzd, usd, jpy, gbp, eur, aud 
  * 
+ * @deprecated
  * @param {*} ticker    The coin to get the price quote 
  * @param {*} callback  call when data is ready
  */
@@ -80,6 +84,7 @@ module.exports.getPriceQuote = getPriceQuote;
 /**
  * This functon will return all the prices coin geko is tracking
  * {currency, nzd, usd, jpy, gbp, jpy, gbp, eur, aud}
+ * @depricated
  */
 const getPriceQuotes = (callback) => {
     let url = EXTERNAL_URL;
@@ -107,3 +112,30 @@ const getPriceQuotes = (callback) => {
 
 }
 module.exports.getPriceQuotes = getPriceQuotes; 
+
+
+const getCurrentPrices = (back ) => {
+    axios.get(EXTERNAL_URL)
+    .then( res => {
+ //       let coinData = res.data.slice(0,COIN_COUNT).map(function(coin) {
+        let coinData = res.data.map(function(coin) {
+            return {
+              key:   coin.id,
+              name:  coin.name, 
+              ticker: coin.symbol.toUpperCase(),
+              balance: 0,
+              price: coin.market_data.current_price.usd,
+              nzd : coin.market_data.current_price.nzd, 
+              usd : coin.market_data.current_price.usd, 
+              jpy : coin.market_data.current_price.jpy,
+              gbp : coin.market_data.current_price.gbp,
+              eur : coin.market_data.current_price.eur,
+              aud : coin.market_data.current_price.aud
+            };
+          });
+          back(coinData);
+    });
+
+}
+
+module.exports.getCurrentPrices = getCurrentPrices;

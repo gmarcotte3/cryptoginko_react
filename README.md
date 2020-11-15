@@ -11,8 +11,117 @@ this version is targed squarly at crypto currencies.
 
 This code is in the prototype stage. I am using it to improve blockchain programming, and web3 development
 
+## Installing ginko
 
-## Development notes
+## configuration
+
+
+## Installing MySQL docker image
+https://hub.docker.com/_/mysql/
+Create a docker image with data held internally
+
+```
+$ docker volume create mysql5_volume
+$ docker run --name=MySQLdb5_instance -p3306:3306 -v mysql5_volume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=somerootpassword -d mysql/mysql-server:5.7.31
+```
+note the version of node Js does not work with MySQL 8 on ubuntu because ubuntu does not have a 'root' account and the authentication is getting messed up. so I am using a MySQL 5 version instead. 
+
+### configure
+you can access the database directly from within the docker. you need to setup the backup admin user inside the docker. After than you can continue to
+use the docker access directly or setup a mysql client on the host machine see below ("set up local mysql client").
+
+```
+$ docker exec -it MySQLdb5_instance mysql -uroot -p<somerootpassword>
+mysql> update mysql.user set host = ‘%’ where user=’root’;
+```
+create a backup admin account for MySQL:
+```
+mysql> CREATE USER 'admin'@'localhost' IDENTIFIED BY 'some_pass';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost'
+    ->     WITH GRANT OPTION;
+mysql> CREATE USER 'admin'@'%' IDENTIFIED BY 'some_pass';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%'
+    ->     WITH GRANT OPTION;
+```
+### create the cryptoginko database
+create a database for this application. the name can be what ever you want but the dbname, passwords have to match
+in the config.json file. 
+
+```
+mysql> CREATE DATABASE cryptoginko;
+```
+
+create a normal user
+```
+mysql> CREATE USER 'satoshi'@'localhost' IDENTIFIED BY 'some_other_pass';
+mysql> GRANT ALL PRIVILEGES ON cryptoginko.* TO 'satoshi'@'localhost'
+    ->     WITH GRANT OPTION;
+mysql> CREATE USER 'satoshi'@'%' IDENTIFIED BY 'some_other_pass';
+mysql> GRANT ALL PRIVILEGES ON cryptoginko.* TO 'satoshi'@'%'
+    ->     WITH GRANT OPTION;
+```
+
+### set up local mysql client.
+after the admin user is setup you can configure using host’s mysql-client. Install the client:
+
+```
+$ sudo apt-get install mysql-client
+```
+
+The mysql docker instance (MySQLdb5_instance) runs as background process. By default MySQLdb5_instance will listen on port 3306 for request. The IP address of this docker instance is not the same as the local host. 
+In order to get the IP MySQLdb5_instance listens on run:
+```
+mysql> CREATE DATABASE cryptoginko;
+```
+use this command to connect locally:
+```
+$ mysql -h172.17.0.2 -uroot -p<somerootpassword> cryptoginko
+```
+
+
+## creating the database
+need to create users first, (see "create a normal user" above)
+
+### database tables
+address table. this table tracks
+```
++-------------+--------------+------+-----+-------------------+-----------------------------+
+| Field       | Type         | Null | Key | Default           | Extra                       |
++-------------+--------------+------+-----+-------------------+-----------------------------+
+| address     | varchar(255) | NO   | PRI | NULL              |                             |
+| currency    | varchar(20)  | NO   | PRI | NULL              |                             |
+| walletname  | varchar(30)  | NO   |     | NULL              |                             |
+| coinbalance | float        | YES  |     | 0                 |                             |
+| memo        | varchar(255) | YES  |     | NULL              |                             |
+| lastupdate  | timestamp    | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-------------+--------------+------+-----+-------------------+-----------------------------+
+```
+
+current price table:
+```
++------------+-------------+------+-----+-------------------+-----------------------------+
+| Field      | Type        | Null | Key | Default           | Extra                       |
++------------+-------------+------+-----+-------------------+-----------------------------+
+| currency   | varchar(20) | NO   | PRI | NULL              |                             |
+| jpy        | float       | YES  |     | 0                 |                             |
+| usd        | float       | YES  |     | 0                 |                             |
+| nzd        | float       | YES  |     | 0                 |                             |
+| gbp        | float       | YES  |     | 0                 |                             |
+| eur        | float       | YES  |     | 0                 |                             |
+| aud        | float       | YES  |     | 0                 |                             |
+| lastupdate | timestamp   | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++------------+-------------+------+-----+-------------------+-----------------------------+
+```
+
+## running the server
+need to start the database server. 
+for the docker version
+```
+$ docker start <mysqlInstance>
+```
+
+
+## Development notes ------------------------------------
 This is the React version of the this program.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

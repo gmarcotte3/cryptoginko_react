@@ -1,7 +1,8 @@
 import React from 'react';
 import Coin from '../Coin/Coin';
 import styled from 'styled-components'
-const CoinGecko = require('../services/CoinGecko');
+const CoinGecko = require('../../services/CoinGecko');
+const databaseService = require('../../services/database/DatabaseServiceMySql');
 
 const Table = styled.table`
     font-size: 1rem;
@@ -10,7 +11,6 @@ const Table = styled.table`
 
 const Div = styled.div`
     background: #2B2B2B 0% 0% no-repeat padding-box;
-    //background: transparent linear-gradient(180deg, #393939 0%, #7A7A7A 100%) 0% 0% no-repeat padding-box;
     opacity: 1;
     height: 44px
 `;
@@ -33,7 +33,11 @@ export default function CoinList(props) {
     }
 
     const handleUpdateMyCoins = (coinData ) => {
+        console.log(coinData);
         props.handleUpdateMyCoins(coinData);
+//        databaseService.saveAddresses( coinData, function callBack() {
+//            console.log("finised saving current prices");
+//        } );
     }
     
     
